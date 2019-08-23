@@ -3,8 +3,12 @@ object AppMetaData {
     const val compileSdkVersion = 29
     const val targetSdkVersion = 29
     const val minSdkVersion = 19
-    const val versionCode = 1
-    const val versionName = "1.0.0"
+
+    private const val majorVersion = 1
+    private const val minorVersion = 0
+    private const val patchVersion = 0
+    const val versionCode = (majorVersion * 1000000) + (minorVersion * 10000) + (patchVersion * 10)
+    const val versionName = "$majorVersion.$minorVersion.$patchVersion"
 }
 
 object Versions {
