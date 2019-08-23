@@ -29,6 +29,9 @@ dependencies {
     implementation Libraries.coroutines
     implementation Libraries.coroutinesAndroid
 
+    implementation Libraries.navigationFragment
+    implementation Libraries.navigationUi
+
     testImplementation Libraries.jUnit
     testImplementation Libraries.koinTest
     androidTestImplementation Libraries.testRunner

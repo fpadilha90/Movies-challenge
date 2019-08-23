@@ -36,6 +36,9 @@ dependencies {
     implementation Libraries.koinXscope
     implementation Libraries.koinXviewModel
 
+    implementation Libraries.navigationFragment
+    implementation Libraries.navigationUi
+
     api Libraries.lifecycleExtensions
     api Libraries.lifecycleViewModel
     api Libraries.lifecycleLiveData

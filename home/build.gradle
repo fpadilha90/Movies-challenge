@@ -1,1 +1,8 @@
 apply from: "$rootDir/${GradleTemplates.feature}"
+
+dependencies {
+    implementation Libraries.recyclerView
+
+    implementation Libraries.glide
+    kapt Libraries.glideCompiler
+}

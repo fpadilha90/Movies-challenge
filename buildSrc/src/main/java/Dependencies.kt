@@ -17,14 +17,16 @@ object Versions {
     const val gradle = "3.4.1"
 
     // Core
-    const val androidX = "1.0.2"
+    const val androidX = "1.2.0-alpha03"
     const val androidXAnnotation = "1.1.0"
     const val androidXLegacy = "1.0.0"
     const val androidXTest = "1.0.0"
-    const val lifecycle = "2.2.0-alpha02"
+    const val appCompat = "1.1.0-rc01"
+    const val lifecycle = "2.2.0-alpha03"
     const val multidex = "1.0.3"
     const val koin = "2.0.1"
     const val coroutines = "1.3.0-M2"
+    const val navigation = "1.0.0"
     const val okHttp = "3.12.0"
     const val retrofit = "2.6.0"
     const val room = "2.1.0"
@@ -32,8 +34,10 @@ object Versions {
     const val rxjava2 = "2.2.4"
 
     // UI
-    const val constraintLayout = "1.1.3"
+    const val constraintLayout = "2.0.0-beta2"
     const val googleAndroidMaterial = "1.0.0"
+    const val recyclerView = "1.1.0-beta03"
+    const val glide = "4.9.0"
 
     // Test
     const val jUnit = "4.12"
@@ -48,7 +52,7 @@ object Libraries {
     // Core
     const val kotlin = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlin}"
 
-    const val appCompat = "androidx.appcompat:appcompat:${Versions.androidX}"
+    const val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
     const val androidxCore = "androidx.core:core-ktx:${Versions.androidX}"
     const val androidxLegacy =
         "androidx.legacy:legacy-support-core-utils:${Versions.androidXLegacy}"
@@ -72,6 +76,8 @@ object Libraries {
     const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
     const val coroutinesAndroid =
         "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
+    const val navigationFragment = "android.arch.navigation:navigation-fragment-ktx:${Versions.navigation}"
+    const val navigationUi = "android.arch.navigation:navigation-ui-ktx:${Versions.navigation}"
 
     const val okhttp3 = "com.squareup.okhttp3:okhttp:${Versions.okHttp}"
     const val okhttp3Interceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.okHttp}"
@@ -90,6 +96,9 @@ object Libraries {
         "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
     const val googleAndroidMaterial =
         "com.google.android.material:material:${Versions.googleAndroidMaterial}"
+    const val recyclerView = "androidx.recyclerview:recyclerview:${Versions.recyclerView}"
+    const val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
+    const val glideCompiler = "com.github.bumptech.glide:compiler:${Versions.glide}"
 
     // Test
     const val jUnit = "junit:junit:${Versions.jUnit}"
