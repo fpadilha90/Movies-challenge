@@ -21,7 +21,6 @@ android {
 }
 
 dependencies {
-    implementation project(Modules.common)
     implementation Libraries.kotlin
     implementation Libraries.koinXcore
     implementation Libraries.koinXscope
@@ -32,6 +31,9 @@ dependencies {
 
     implementation Libraries.navigationFragment
     implementation Libraries.navigationUi
+
+    implementation Libraries.glide
+    kapt Libraries.glideCompiler
 
     testImplementation Libraries.jUnit
     testImplementation Libraries.koinTest

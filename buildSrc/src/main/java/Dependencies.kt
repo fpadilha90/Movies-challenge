@@ -76,7 +76,8 @@ object Libraries {
     const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
     const val coroutinesAndroid =
         "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
-    const val navigationFragment = "android.arch.navigation:navigation-fragment-ktx:${Versions.navigation}"
+    const val navigationFragment =
+        "android.arch.navigation:navigation-fragment-ktx:${Versions.navigation}"
     const val navigationUi = "android.arch.navigation:navigation-ui-ktx:${Versions.navigation}"
 
     const val okhttp3 = "com.squareup.okhttp3:okhttp:${Versions.okHttp}"
@@ -111,7 +112,7 @@ object Libraries {
 
 object Modules {
     const val app = ":app"
-    //    const val library = ":library" // **** Abstraction Module ****
+    const val common = ":common"
     const val data = ":data"
     const val home = ":home"
 }
