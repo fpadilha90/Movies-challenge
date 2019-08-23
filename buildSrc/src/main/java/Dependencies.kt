@@ -30,6 +30,7 @@ object Versions {
     const val okHttp = "3.12.0"
     const val retrofit = "2.6.0"
     const val room = "2.1.0"
+    const val paging = "2.1.0-rc01"
     const val gson = "2.8.5"
     const val rxjava2 = "2.2.4"
 
@@ -87,6 +88,7 @@ object Libraries {
     const val gson = "com.google.code.gson:gson:${Versions.gson}"
     const val rxjava2 = "io.reactivex.rxjava2:rxjava:${Versions.rxjava2}"
 
+    const val paging = "androidx.paging:paging-runtime-ktx:${Versions.paging}"
     const val room = "androidx.room:room-runtime:${Versions.room}"
     const val roomRX = "androidx.room:room-rxjava2:${Versions.room}"
     const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"

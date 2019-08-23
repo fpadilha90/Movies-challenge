@@ -14,6 +14,12 @@ dependencies {
     implementation Libraries.gson
     implementation Libraries.retrofitGsonConverter
 
+    implementation Libraries.room
+    implementation Libraries.paging
+    implementation Libraries.roomRX
+    implementation Libraries.roomKTX
+    kapt Libraries.roomCompiler
+
     testImplementation Libraries.jUnit
     testImplementation Libraries.androidxTest
     testImplementation Libraries.truth
