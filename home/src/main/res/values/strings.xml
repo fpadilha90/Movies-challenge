@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">home</string>
+    <string name="greetings">Hi, welcome back</string>
+    <string name="greetings_message">what should we watch today? ;)</string>
 </resources>

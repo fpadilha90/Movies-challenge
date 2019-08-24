@@ -16,16 +16,17 @@
 
 package com.fpadilha90.movies.home.ui
 
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.fpadilha90.movies.common.R
 import com.fpadilha90.movies.common.model.NetworkState
-import com.fpadilha90.movies.common.model.Status.*
+import com.fpadilha90.movies.common.model.Status.FAILED
+import com.fpadilha90.movies.common.model.Status.RUNNING
 
 /**
  * A View Holder that can display a loading or have click action.

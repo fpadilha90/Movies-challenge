@@ -3,7 +3,6 @@ package com.fpadilha90.movies.common.model
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.squareup.moshi.Json
 
 @Entity(
     tableName = "movies",

@@ -15,11 +15,8 @@
  */
 package com.fpadilha90.movies.common.model;
 
-import androidx.annotation.AnyThread;
-import androidx.annotation.GuardedBy;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
+import androidx.annotation.*;
+
 import java.util.Arrays;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Executor;

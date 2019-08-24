@@ -19,10 +19,10 @@ package com.fpadilha90.movies.data.repository
 import androidx.annotation.MainThread
 import androidx.paging.PagedList
 import com.fpadilha90.movies.common.extension.createStatusLiveData
-import com.fpadilha90.movies.data.api.MovieService
-import com.fpadilha90.movies.data.model.GetPopularDTO
 import com.fpadilha90.movies.common.model.Movie
 import com.fpadilha90.movies.common.model.PagingRequestHelper
+import com.fpadilha90.movies.data.api.MovieService
+import com.fpadilha90.movies.data.model.GetPopularDTO
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
