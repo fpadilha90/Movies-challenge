@@ -33,6 +33,8 @@ dependencies {
     implementation Libraries.navigationFragment
     implementation Libraries.navigationUi
 
+    implementation Libraries.constraintLayout
+
     testImplementation Libraries.jUnit
     testImplementation Libraries.koinTest
     androidTestImplementation Libraries.testRunner

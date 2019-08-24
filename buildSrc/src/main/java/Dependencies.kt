@@ -13,8 +13,8 @@ object AppMetaData {
 
 object Versions {
     // Application
-    const val kotlin = "1.3.50"
-    const val gradle = "3.4.1"
+    const val kotlin = "1.3.41"
+    const val gradle = "3.4.2"
 
     // Core
     const val androidX = "1.2.0-alpha03"
@@ -35,7 +35,7 @@ object Versions {
     const val rxjava2 = "2.2.4"
 
     // UI
-    const val constraintLayout = "2.0.0-beta2"
+    const val constraintLayout = "1.1.3"
     const val googleAndroidMaterial = "1.0.0"
     const val recyclerView = "1.1.0-beta03"
     const val glide = "4.9.0"
