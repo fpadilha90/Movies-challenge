@@ -21,17 +21,6 @@ android {
 }
 
 dependencies {
-    implementation Libraries.kotlin
-    implementation Libraries.koinXcore
-    implementation Libraries.koinXscope
-    implementation Libraries.koinXviewModel
-
-    implementation Libraries.coroutines
-    implementation Libraries.coroutinesAndroid
-
-    implementation Libraries.navigationFragment
-    implementation Libraries.navigationUi
-
     api Libraries.glide
     kapt Libraries.glideCompiler
 
