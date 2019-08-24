@@ -41,6 +41,7 @@ class MovieBoundaryCallback(
         private val ioExecutor: Executor)
     : PagedList.BoundaryCallback<Movie>() {
 
+    private var page: Int = 1
     val helper = PagingRequestHelper(ioExecutor)
     val networkState = helper.createStatusLiveData()
 
@@ -50,7 +51,7 @@ class MovieBoundaryCallback(
     @MainThread
     override fun onZeroItemsLoaded() {
         helper.runIfNotRunning(PagingRequestHelper.RequestType.INITIAL) {
-            movieService.getPopular().enqueue(createWebserviceCallback(it))
+            movieService.getPopular(page).enqueue(createWebserviceCallback(it))
         }
     }
 
@@ -60,11 +61,8 @@ class MovieBoundaryCallback(
     @MainThread
     override fun onItemAtEndLoaded(itemAtEnd: Movie) {
         helper.runIfNotRunning(PagingRequestHelper.RequestType.AFTER) {
-//            movieService.getTopAfter(
-//                    subreddit = subredditName,
-//                    after = itemAtEnd.name,
-//                    limit = networkPageSize)
-//                    .enqueue(createWebserviceCallback(it))
+//            page += 1
+//            movieService.getPopular(page).enqueue(createWebserviceCallback(it))
         }
     }
 

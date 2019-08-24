@@ -16,7 +16,7 @@ data class Movie(
     @PrimaryKey
     val id: Long,
 //    @Json(name="backdrop_path")
-    val backdrop_path: String,
+    val backdrop_path: String?,
     val vote_average: Double,
     val overview: String,
 //    @Json(name="first_air_date")

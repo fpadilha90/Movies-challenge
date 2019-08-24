@@ -51,7 +51,7 @@ class MovieRepositoryImpl(
     private fun refresh(): LiveData<NetworkState> {
         val networkState = MutableLiveData<NetworkState>()
         networkState.value = NetworkState.LOADING
-        movieService.getPopular().enqueue(
+        movieService.getPopular(1).enqueue(
             object : Callback<GetPopularDTO> {
                 override fun onFailure(call: Call<GetPopularDTO>, t: Throwable) {
                     // retrofit calls this on main thread so safe to call set value
@@ -97,7 +97,7 @@ class MovieRepositoryImpl(
 
         // We use toLiveData Kotlin extension function here, you could also use LivePagedListBuilder
         val livePagedList = db.movies().movies().toLiveData(
-            pageSize = 15,
+            pageSize = 20,
             boundaryCallback = boundaryCallback
         )
 
