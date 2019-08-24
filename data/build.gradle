@@ -4,15 +4,31 @@ android {
     testOptions {
         unitTests.includeAndroidResources = true
     }
+
+    flavorDimensions "repository"
+    productFlavors {
+        mock {
+            dimension "repository"
+
+        }
+        integration {
+            dimension "repository"
+
+            buildConfigField "String", "HOST", "\"https://api.themoviedb.org/\""
+            buildConfigField "String", "API_KEY", "\"5d967c7c335764f39b1efbe9c5de9760\""
+        }
+    }
 }
 
 dependencies {
     implementation project(Modules.home)
+
     implementation Libraries.okhttp3
     implementation Libraries.okhttp3Interceptor
     implementation Libraries.retrofit
     implementation Libraries.gson
     implementation Libraries.retrofitGsonConverter
+    implementation Libraries.retrofitCoroutines
 
     implementation Libraries.room
     implementation Libraries.paging

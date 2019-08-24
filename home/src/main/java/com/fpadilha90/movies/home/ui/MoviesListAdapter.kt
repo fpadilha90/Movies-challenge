@@ -37,7 +37,8 @@ class MoviesListAdapter(private val list: List<Movie>) : RecyclerView.Adapter<Mo
         fun bind(movie: Movie) {
             name.text = movie.name
             rate.text = movie.voteAverage.toString()
-            background.loadFromUrl(movie.backdropPath)
+            //TODO: find a place to this url
+            background.loadFromUrl("https://image.tmdb.org/t/p/w500" + movie.backdropPath)
         }
     }
 }

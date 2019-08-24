@@ -1,6 +1,7 @@
 package com.fpadilha90.movies.di
 
 import android.content.ContentResolver
+import com.fpadilha90.movies.data.di.ApiInject
 import com.fpadilha90.movies.data.di.DataInject
 import com.fpadilha90.movies.home.di.HomeInject
 import org.koin.android.ext.koin.androidContext
@@ -16,8 +17,9 @@ object AppInject {
         get() {
             return ArrayList<Module>().apply {
                 add(appModules)
-                addAll(DataInject.modules)
                 addAll(HomeInject.modules)
+                addAll(DataInject.modules)
+                addAll(ApiInject.modules)
             }
         }
 }

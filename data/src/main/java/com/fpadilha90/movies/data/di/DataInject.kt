@@ -8,7 +8,7 @@ import org.koin.dsl.module
 object DataInject {
 
     private val repositoryModule = module {
-        single<MovieRepository> { MovieRepositoryImpl() }
+        single<MovieRepository> { MovieRepositoryImpl(get()) }
     }
 
     val modules: List<Module> = listOf(repositoryModule)

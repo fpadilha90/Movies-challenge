@@ -29,6 +29,7 @@ object Versions {
     const val navigation = "1.0.0"
     const val okHttp = "3.12.0"
     const val retrofit = "2.6.0"
+    const val retrofitCoroutines = "0.9.2"
     const val room = "2.1.0"
     const val paging = "2.1.0-rc01"
     const val gson = "2.8.5"
@@ -84,7 +85,8 @@ object Libraries {
     const val okhttp3 = "com.squareup.okhttp3:okhttp:${Versions.okHttp}"
     const val okhttp3Interceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.okHttp}"
     const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
-    const val retrofitGsonConverter = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
+    const val retrofitGsonConverter = "com.squareup.retrofit2:converter-moshi:${Versions.retrofit}"
+    const val retrofitCoroutines = "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:${Versions.retrofitCoroutines}"
     const val gson = "com.google.code.gson:gson:${Versions.gson}"
     const val rxjava2 = "io.reactivex.rxjava2:rxjava:${Versions.rxjava2}"
 

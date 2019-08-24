@@ -9,7 +9,7 @@ import org.koin.dsl.module
 object HomeInject {
 
     private val viewModelModule = module {
-        viewModel { HomeViewModel() }
+        viewModel { HomeViewModel(get()) }
     }
 
     val modules: List<Module> = listOf(viewModelModule)
