@@ -32,7 +32,7 @@ dependencies {
     implementation Libraries.navigationFragment
     implementation Libraries.navigationUi
 
-    implementation Libraries.glide
+    api Libraries.glide
     kapt Libraries.glideCompiler
 
     testImplementation Libraries.jUnit
