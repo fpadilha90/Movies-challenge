@@ -22,6 +22,7 @@ android {
 
 dependencies {
     implementation project(Modules.home)
+    implementation project(Modules.common)
 
     implementation Libraries.okhttp3
     implementation Libraries.okhttp3Interceptor

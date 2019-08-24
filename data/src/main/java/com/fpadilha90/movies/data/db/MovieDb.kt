@@ -4,11 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.fpadilha90.movies.data.model.MovieDTO
+import com.fpadilha90.movies.common.model.Movie
 
 
 @Database(
-    entities = [MovieDTO::class],
+    entities = [Movie::class],
     version = 1,
     exportSchema = false
 )

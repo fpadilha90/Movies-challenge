@@ -2,5 +2,4 @@ apply from: "$rootDir/${GradleTemplates.feature}"
 
 dependencies {
     implementation Libraries.recyclerView
-    implementation Libraries.paging
 }

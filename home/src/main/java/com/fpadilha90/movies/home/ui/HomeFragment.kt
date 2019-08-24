@@ -12,6 +12,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
 
+    private lateinit var adapter: MoviesListAdapter
     private val viewModel: HomeViewModel by viewModel()
 
     override fun onCreateView(
@@ -25,8 +26,25 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        adapter = MoviesListAdapter {
+            viewModel.retry()
+        }
+        moviesView.adapter = adapter
+
         viewModel.movies.observe(this, Observer {
-            moviesView.adapter = MoviesListAdapter(it)
+            adapter.submitList(it)
         })
+        viewModel.networkState.observe(this, Observer {
+            adapter.setNetworkState(it)
+        })
+    }
+
+    private fun initSwipeToRefresh() {
+        viewModel.refreshState.observe(this, Observer {
+//            swipe_refresh.isRefreshing = it == NetworkState.LOADING
+        })
+//        swipe_refresh.setOnRefreshListener {
+//            model.refresh()
+//        }
     }
 }

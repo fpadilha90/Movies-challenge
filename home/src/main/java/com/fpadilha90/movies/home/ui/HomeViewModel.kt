@@ -1,23 +1,50 @@
 package com.fpadilha90.movies.home.ui
 
-import android.R
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.Transformations.map
 import androidx.lifecycle.ViewModel
 import com.example.common.domain.exception.Failure
-import com.fpadilha90.movies.common.model.Movie
 import com.fpadilha90.movies.home.repository.MovieRepository
-import kotlinx.coroutines.*
 
-class HomeViewModel(movieRepository : MovieRepository) : ViewModel() {
-    val movies = MutableLiveData<List<Movie>>()
+class HomeViewModel(movieRepository: MovieRepository) : ViewModel() {
+    val page = MutableLiveData<Int>()
+    //    private val subredditName = MutableLiveData<String>()
+    private val repoResult = map(page) {
+        movieRepository.getPopularTVShows()
+    }
+    val movies = Transformations.switchMap(repoResult) {
+        it.pagedList }!!
+    val networkState = Transformations.switchMap(repoResult) { it.networkState }!!
+    val refreshState = Transformations.switchMap(repoResult) { it.refreshState }!!
+
+    init {
+        page.value = 1
+    }
+    fun refresh() {
+        repoResult.value?.refresh?.invoke()
+    }
+
+//    fun showSubreddit(subreddit: String): Boolean {
+//        if (subredditName.value == subreddit) {
+//            return false
+//        }
+//        subredditName.value = subreddit
+//        return true
+//    }
+
+    fun retry() {
+        val listing = repoResult?.value
+        listing?.retry?.invoke()
+    }
+
+//    fun currentSubreddit(): String? = subredditName.value
 
     init {
 
-        GlobalScope.launch(Dispatchers.Main) {
-            movieRepository.getPopularTVShows().either(::handleError) {
-                movies.value = it
-            }
-        }
+//        GlobalScope.launch(Dispatchers.Main) {
+//            movieRepository.getPopularTVShows()
+//        }
 
 //        movies.value = arrayListOf(
 //            Movie("https://www.ubackground.com/_ph/22/673076330.jpg", 5.0, 1, "https://www.ubackground.com/_ph/22/673076330.jpg", 4.0, "Teste", "Movie 1"),

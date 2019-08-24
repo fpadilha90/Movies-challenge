@@ -24,6 +24,10 @@ dependencies {
     api Libraries.glide
     kapt Libraries.glideCompiler
 
+    api Libraries.paging
+    implementation Libraries.retrofitGsonConverter
+    implementation Libraries.room
+
     testImplementation Libraries.jUnit
     testImplementation Libraries.koinTest
     androidTestImplementation Libraries.testRunner
