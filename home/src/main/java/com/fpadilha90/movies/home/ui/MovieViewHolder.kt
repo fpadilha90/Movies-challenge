@@ -41,7 +41,6 @@ class MovieViewHolder(view: View, expand: (viewHolder: MovieViewHolder) -> Unit)
     }
 
     fun collapse() {
-        //todo: dp values
         setIsRecyclable(true)
         val anim = ValueAnimator.ofInt(itemView.measuredHeight, initialHeight)
         anim.addUpdateListener {
