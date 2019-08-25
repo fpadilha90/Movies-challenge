@@ -16,6 +16,7 @@ import com.fpadilha90.movies.home.R
  * A RecyclerView ViewHolder that displays a movie.
  */
 class MovieViewHolder(view: View, expand: (viewHolder: MovieViewHolder) -> Unit) : RecyclerView.ViewHolder(view) {
+    private var initialHeight: Int = 0
     private val name: TextView = view.findViewById(R.id.name)
     private val rate: TextView = view.findViewById(R.id.rate)
     private val background: ImageView = view.findViewById(R.id.background)
@@ -42,11 +43,11 @@ class MovieViewHolder(view: View, expand: (viewHolder: MovieViewHolder) -> Unit)
     fun collapse() {
         //todo: dp values
         setIsRecyclable(true)
-        val anim = ValueAnimator.ofInt(itemView.measuredHeight, 200)
+        val anim = ValueAnimator.ofInt(itemView.measuredHeight, initialHeight)
         anim.addUpdateListener {
-//            val `val` = it.animatedValue as Int
+            val `val` = it.animatedValue as Int
             val layoutParams = itemView.layoutParams
-//            layoutParams.height = `val`
+            layoutParams.height = `val`
             itemView.layoutParams = layoutParams
             curtain.gone()
             overview.gone()
@@ -54,14 +55,16 @@ class MovieViewHolder(view: View, expand: (viewHolder: MovieViewHolder) -> Unit)
         anim.duration = 200
         anim.start()
     }
+
     fun expand() {
+        if (initialHeight == 0) initialHeight = itemView.measuredHeight
         //todo: dp values
         setIsRecyclable(false)
-        val anim = ValueAnimator.ofInt(itemView.measuredHeight, 600)
+        val anim = ValueAnimator.ofInt(itemView.measuredHeight, itemView.measuredHeight + 300)
         anim.addUpdateListener {
-//            val `val` = it.animatedValue as Int
+            val `val` = it.animatedValue as Int
             val layoutParams = itemView.layoutParams
-//            layoutParams.height = `val`
+            layoutParams.height = `val`
             itemView.layoutParams = layoutParams
             curtain.visible()
             overview.visible()

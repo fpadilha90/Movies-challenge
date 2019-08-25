@@ -10,7 +10,7 @@ import com.fpadilha90.movies.common.model.Movie
 import com.fpadilha90.movies.common.model.NetworkState
 import com.fpadilha90.movies.data.api.MovieService
 import com.fpadilha90.movies.data.db.MovieDb
-import com.fpadilha90.movies.data.model.GetPopularDTO
+import com.fpadilha90.movies.data.model.MovieListDTO
 import com.fpadilha90.movies.home.repository.MovieRepository
 import retrofit2.Call
 import retrofit2.Callback
@@ -27,7 +27,7 @@ class MovieRepositoryImpl(
     /**
      * Inserts the response into the database while also assigning position indices to items.
      */
-    private fun insertResultIntoDb(body: GetPopularDTO) {
+    private fun insertResultIntoDb(body: MovieListDTO) {
         body.results.let { moviesDTO ->
             db.runInTransaction {
                 //                val start = db.movies().getNextIndexInSubreddit(subredditName)
@@ -52,15 +52,15 @@ class MovieRepositoryImpl(
         val networkState = MutableLiveData<NetworkState>()
         networkState.value = NetworkState.LOADING
         movieService.getPopular(1).enqueue(
-            object : Callback<GetPopularDTO> {
-                override fun onFailure(call: Call<GetPopularDTO>, t: Throwable) {
+            object : Callback<MovieListDTO> {
+                override fun onFailure(call: Call<MovieListDTO>, t: Throwable) {
                     // retrofit calls this on main thread so safe to call set value
                     networkState.value = NetworkState.error(t.message)
                 }
 
                 override fun onResponse(
-                    call: Call<GetPopularDTO>,
-                    response: Response<GetPopularDTO>
+                    call: Call<MovieListDTO>,
+                    response: Response<MovieListDTO>
                 ) {
                     ioExecutor.execute {
                         db.runInTransaction {

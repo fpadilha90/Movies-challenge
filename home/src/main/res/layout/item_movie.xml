@@ -31,7 +31,7 @@
     <View
         android:id="@+id/curtain"
         android:layout_width="0dp"
-        android:layout_height="220dp"
+        android:layout_height="0dp"
         android:background="#BE000000"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -45,7 +45,7 @@
         android:layout_height="0dp"
         android:layout_margin="52dp"
         android:ellipsize="end"
-        android:maxLines="6"
+        android:maxLines="4"
         android:textColor="@android:color/white"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
