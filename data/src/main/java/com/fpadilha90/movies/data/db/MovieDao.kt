@@ -9,10 +9,10 @@ import com.fpadilha90.movies.common.model.Movie
 
 @Dao
 interface MovieDao {
-    @Query("SELECT * FROM movies")
+    @Query("SELECT * FROM movies ORDER BY page")
     fun movies() : DataSource.Factory<Int, Movie>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(posts : List<Movie>)
+    fun insert(movies : List<Movie>)
 
 }

@@ -20,6 +20,7 @@ import com.fpadilha90.movies.home.R
 class MovieViewHolder(view: View, expand: (viewHolder: MovieViewHolder) -> Unit) : RecyclerView.ViewHolder(view) {
     private val name: TextView = view.findViewById(R.id.name)
     private val rate: TextView = view.findViewById(R.id.rate)
+    private val shadow: View = view.findViewById(R.id.shadow)
     private val background: ImageView = view.findViewById(R.id.background)
     private val curtain: View = view.findViewById(R.id.curtain)
     private val overview: TextView = view.findViewById(R.id.overview)
@@ -35,10 +36,14 @@ class MovieViewHolder(view: View, expand: (viewHolder: MovieViewHolder) -> Unit)
         this.movie = movie
 
         name.text = movie.name
-        rate.text = movie.vote_average.toString()
+        rate.text = movie.voteAverage.toString()
         overview.text = movie.overview
         //TODO: find a place to this url
-        background.loadFromUrl("https://image.tmdb.org/t/p/w500" + movie.backdrop_path)
+        movie.backdropPath.let {
+            background.loadFromUrl("https://image.tmdb.org/t/p/w500$it") {
+                shadow.visible()
+            }
+        }
     }
 
     fun collapse() {
@@ -73,7 +78,6 @@ class MovieViewHolder(view: View, expand: (viewHolder: MovieViewHolder) -> Unit)
     }
 
     companion object {
-
         fun create(parent: ViewGroup, listener: (viewHolder: MovieViewHolder) -> Unit): MovieViewHolder {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_movie, parent, false)

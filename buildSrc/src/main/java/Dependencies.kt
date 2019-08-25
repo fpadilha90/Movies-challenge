@@ -47,6 +47,7 @@ object Versions {
     const val testEspresso = "3.2.0"
     const val roboElectric = "4.3"
     const val truth = "1.0"
+    const val mockito = "2.1.0"
 }
 
 object Libraries {
@@ -111,6 +112,7 @@ object Libraries {
     const val testEspresso = "androidx.test.espresso:espresso-core:${Versions.testEspresso}"
     const val roboElectric = "org.robolectric:robolectric:${Versions.roboElectric}"
     const val truth = "com.google.truth:truth:${Versions.truth}"
+    const val mockito = "com.nhaarman.mockitokotlin2:mockito-kotlin:${Versions.mockito}"
 
 }
 

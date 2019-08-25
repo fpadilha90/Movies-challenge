@@ -13,7 +13,7 @@ import java.util.concurrent.Executors
 object AppInject {
     private val appModules = module {
         single<ContentResolver> { androidContext().contentResolver }
-        single<Executor> { Executors.newSingleThreadExecutor() as Executor }
+        single { Executors.newSingleThreadExecutor() as Executor }
     }
 
     val modules: List<Module>

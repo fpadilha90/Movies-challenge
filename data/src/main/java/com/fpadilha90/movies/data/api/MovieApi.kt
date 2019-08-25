@@ -11,23 +11,9 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 class MovieApi {
     companion object {
-        private val apiKeyInterceptor: Interceptor = Interceptor { chain ->
-            val original = chain.request()
-            val originalHttpUrl = original.url()
+        private const val API_KEY_PARAM = "api_key"
 
-            val url = originalHttpUrl.newBuilder()
-                .addQueryParameter("api_key", BuildConfig.API_KEY)
-                .build()
-
-            // Request customization: add request headers
-            val requestBuilder = original.newBuilder()
-                .url(url)
-
-            val request = requestBuilder.build()
-            chain.proceed(request)
-        }
-
-        fun create(baseUrl: String, debug: Boolean = false): MovieService {
+        fun create(baseUrl: String, apiKey: String, debug: Boolean = false): MovieService {
             val clientBuilder = OkHttpClient.Builder()
             if (debug) {
                 val httpLoggingInterceptor =
@@ -35,7 +21,7 @@ class MovieApi {
                 httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
                 clientBuilder.addInterceptor(httpLoggingInterceptor)
             }
-            clientBuilder.addInterceptor(apiKeyInterceptor)
+            clientBuilder.addInterceptor(apiKeyInterceptor(apiKey))
 
             return Retrofit.Builder()
                 .baseUrl(baseUrl)
@@ -44,6 +30,21 @@ class MovieApi {
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .build()
                 .create(MovieService::class.java)
+        }
+
+        private fun apiKeyInterceptor(apiKey : String) = Interceptor { chain ->
+            val original = chain.request()
+            val originalHttpUrl = original.url()
+
+            val url = originalHttpUrl.newBuilder()
+                .addQueryParameter(API_KEY_PARAM, apiKey)
+                .build()
+
+            val requestBuilder = original.newBuilder()
+                .url(url)
+
+            val request = requestBuilder.build()
+            chain.proceed(request)
         }
     }
 }

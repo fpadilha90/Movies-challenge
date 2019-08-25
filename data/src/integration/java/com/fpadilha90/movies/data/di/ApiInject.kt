@@ -9,7 +9,7 @@ object ApiInject {
 
     private val serviceModule = module {
         single {
-            MovieApi.create(BuildConfig.HOST, BuildConfig.DEBUG)
+            MovieApi.create(BuildConfig.HOST, BuildConfig.API_KEY, BuildConfig.DEBUG)
         }
     }
 

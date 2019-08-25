@@ -3,7 +3,7 @@ package com.fpadilha90.movies.common.extension
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fpadilha90.movies.common.model.NetworkState
-import com.fpadilha90.movies.common.model.PagingRequestHelper
+import com.fpadilha90.movies.common.utils.PagingRequestHelper
 
 private fun getErrorMessage(report: PagingRequestHelper.StatusReport): String {
     return PagingRequestHelper.RequestType.values().mapNotNull {
@@ -11,7 +11,7 @@ private fun getErrorMessage(report: PagingRequestHelper.StatusReport): String {
     }.first()
 }
 
-fun PagingRequestHelper.createStatusLiveData(): LiveData<NetworkState> {
+fun PagingRequestHelper.createStatusLiveData(): MutableLiveData<NetworkState> {
     val liveData = MutableLiveData<NetworkState>()
     addListener { report ->
         when {

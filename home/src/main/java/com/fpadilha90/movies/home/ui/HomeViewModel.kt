@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.Transformations.map
 import androidx.lifecycle.ViewModel
-import com.example.common.domain.exception.Failure
 import com.fpadilha90.movies.home.repository.MovieRepository
 
 class HomeViewModel(movieRepository: MovieRepository) : ViewModel() {
@@ -29,9 +28,5 @@ class HomeViewModel(movieRepository: MovieRepository) : ViewModel() {
     fun retry() {
         val listing = repoResult?.value
         listing?.retry?.invoke()
-    }
-
-    private fun handleError(failure: Failure) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

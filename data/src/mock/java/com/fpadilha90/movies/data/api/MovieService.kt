@@ -1,29 +1,59 @@
 package com.fpadilha90.movies.data.api
 
-import com.fpadilha90.movies.data.model.GetPopularDTO
+import com.fpadilha90.movies.data.model.MovieListDTO
+import com.google.gson.Gson
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.mock
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.Types
-import kotlinx.coroutines.CompletableDeferred
-import kotlinx.coroutines.Deferred
+import okhttp3.Request
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
-import java.lang.reflect.Type
 
 class MovieServiceMock : MovieService {
+    override fun getPopular(page: Int): Call<MovieListDTO> {
+        val moshi = Moshi.Builder().build()
+        val adapter: JsonAdapter<MovieListDTO> = moshi.adapter(MovieListDTO::class.java)
 
 
-    override fun getPopular(apiKey: String): Deferred<Response<GetPopularDTO>> {
-        val moshi: Moshi = Moshi.Builder().build()
-        val adapter: JsonAdapter<GetPopularDTO> = moshi.adapter(GetPopularDTO::class.java)
+        return object : Call<MovieListDTO>{
+            override fun enqueue(callback: Callback<MovieListDTO>) {
+            }
 
-        return CompletableDeferred(Response.success(
-            adapter.fromJson(getPopularMock)))
+            override fun isExecuted(): Boolean {
+                return true
+            }
 
+            override fun clone(): Call<MovieListDTO> {
+                TODO()
+            }
+
+            override fun isCanceled(): Boolean {
+                return false
+            }
+
+            override fun cancel() {
+            }
+
+            override fun execute(): Response<MovieListDTO> {
+                return Response.success(adapter.fromJson(getPopularMockPage1))
+            }
+
+            override fun request(): Request {
+                TODO()
+            }
+        }
+//        return mock {
+//            on { execute() } doReturn response
+//        }
+//        val mockApiService = mock<ApiService> {
+//            on { getStep1User() } doReturn mockCall
+//        }
     }
 
     companion object {
-        const val getPopularMock = "{\n" +
+        const val getPopularMockPage1 = "{\n" +
                 "  \"page\": 1,\n" +
                 "  \"total_results\": 10000,\n" +
                 "  \"total_pages\": 500,\n" +
