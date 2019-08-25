@@ -13,7 +13,7 @@ object AppMetaData {
 
 object Versions {
     // Application
-    const val kotlin = "1.3.41"
+    const val kotlin = "1.3.50"
     const val gradle = "3.4.2"
 
     // Core
@@ -47,7 +47,8 @@ object Versions {
     const val testEspresso = "3.2.0"
     const val roboElectric = "4.3"
     const val truth = "1.0"
-    const val mockito = "2.1.0"
+    const val mockitoKotlin = "2.1.0"
+    const val coreTesting = "1.0.0-alpha3"
 }
 
 object Libraries {
@@ -112,7 +113,8 @@ object Libraries {
     const val testEspresso = "androidx.test.espresso:espresso-core:${Versions.testEspresso}"
     const val roboElectric = "org.robolectric:robolectric:${Versions.roboElectric}"
     const val truth = "com.google.truth:truth:${Versions.truth}"
-    const val mockito = "com.nhaarman.mockitokotlin2:mockito-kotlin:${Versions.mockito}"
+    const val mockitoKotlin = "com.nhaarman.mockitokotlin2:mockito-kotlin:${Versions.mockitoKotlin}"
+    const val coreTesting = "android.arch.core:core-testing:${Versions.coreTesting}"
 
 }
 

@@ -7,7 +7,7 @@ import androidx.paging.toLiveData
 import com.fpadilha90.movies.common.model.Listing
 import com.fpadilha90.movies.common.model.Show
 import com.fpadilha90.movies.common.model.NetworkState
-import com.fpadilha90.movies.data.api.MovieService
+import com.fpadilha90.movies.data.api.TheMovieDbService
 import com.fpadilha90.movies.data.db.AppDb
 import com.fpadilha90.movies.data.model.ShowsListDTO
 import com.fpadilha90.movies.data.repository.PopularShowsBoundaryCallback.Companion.FIRST_PAGE
@@ -20,7 +20,7 @@ import java.util.concurrent.Executor
 
 class ShowsRepositoryImpl(
     val db: AppDb,
-    private val movieService: MovieService,
+    private val webservice: TheMovieDbService,
     private val ioExecutor: Executor
 ) : ShowRepository {
 
@@ -36,7 +36,7 @@ class ShowsRepositoryImpl(
     private fun refresh(): LiveData<NetworkState> {
         val networkState = MutableLiveData<NetworkState>()
         networkState.value = NetworkState.LOADING
-        movieService.getPopularShows(FIRST_PAGE).enqueue(
+        webservice.getPopularShows(FIRST_PAGE).enqueue(
             object : Callback<ShowsListDTO> {
                 override fun onFailure(call: Call<ShowsListDTO>, t: Throwable) {
                     networkState.value = NetworkState.error(t.message)
@@ -60,7 +60,7 @@ class ShowsRepositoryImpl(
 
     override fun getPopularShows(): Listing<Show> {
         val boundaryCallback = PopularShowsBoundaryCallback(
-            movieService = movieService,
+            webservice = webservice,
             handleResponse = this::insertResultIntoDb,
             ioExecutor = ioExecutor
         )

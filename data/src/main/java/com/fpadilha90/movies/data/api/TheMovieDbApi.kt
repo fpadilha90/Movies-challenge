@@ -1,6 +1,5 @@
 package com.fpadilha90.movies.data.api
 
-import com.fpadilha90.movies.data.BuildConfig
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -13,7 +12,7 @@ class TheMovieDbApi {
     companion object {
         private const val API_KEY_PARAM = "api_key"
 
-        fun create(baseUrl: String, apiKey: String, debug: Boolean = false): MovieService {
+        fun create(baseUrl: String, apiKey: String, debug: Boolean = false): TheMovieDbService {
             val clientBuilder = OkHttpClient.Builder()
             if (debug) {
                 val httpLoggingInterceptor =
@@ -29,7 +28,7 @@ class TheMovieDbApi {
                 .addConverterFactory(MoshiConverterFactory.create())
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .build()
-                .create(MovieService::class.java)
+                .create(TheMovieDbService::class.java)
         }
 
         private fun apiKeyInterceptor(apiKey : String) = Interceptor { chain ->

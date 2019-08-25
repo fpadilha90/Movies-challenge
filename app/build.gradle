@@ -60,6 +60,7 @@ dependencies {
     implementation Libraries.multidex
 
     testImplementation Libraries.jUnit
+    testImplementation Libraries.coreTesting
     androidTestImplementation Libraries.testRunner
     androidTestImplementation Libraries.testEspresso
 }

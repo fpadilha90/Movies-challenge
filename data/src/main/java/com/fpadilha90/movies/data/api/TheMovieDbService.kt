@@ -5,7 +5,7 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface MovieService {
+interface TheMovieDbService {
 
     @GET("3/tv/popular")
     fun getPopularShows(@Query("page") page: Int): Call<ShowsListDTO>

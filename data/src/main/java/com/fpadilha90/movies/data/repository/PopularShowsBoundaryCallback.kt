@@ -21,7 +21,7 @@ import androidx.paging.PagedList
 import com.fpadilha90.movies.data.utils.createStatusLiveData
 import com.fpadilha90.movies.common.model.Show
 import com.fpadilha90.movies.data.utils.PagingRequestHelper
-import com.fpadilha90.movies.data.api.MovieService
+import com.fpadilha90.movies.data.api.TheMovieDbService
 import com.fpadilha90.movies.data.model.ShowsListDTO
 import retrofit2.Call
 import retrofit2.Callback
@@ -36,7 +36,7 @@ import java.util.concurrent.Executor
  * rate limiting using the PagingRequestHelper class.
  */
 class PopularShowsBoundaryCallback(
-    private val movieService: MovieService,
+    private val webservice: TheMovieDbService,
     private val handleResponse: (ShowsListDTO) -> Unit,
     private val ioExecutor: Executor
 ) : PagedList.BoundaryCallback<Show>() {
@@ -48,7 +48,7 @@ class PopularShowsBoundaryCallback(
     @MainThread
     override fun onZeroItemsLoaded() {
         helper.runIfNotRunning(PagingRequestHelper.RequestType.INITIAL) {
-            movieService.getPopularShows(page).enqueue(createWebserviceCallback(it))
+            webservice.getPopularShows(page).enqueue(createWebserviceCallback(it))
         }
     }
 
@@ -56,7 +56,7 @@ class PopularShowsBoundaryCallback(
     override fun onItemAtEndLoaded(itemAtEnd: Show) {
         helper.runIfNotRunning(PagingRequestHelper.RequestType.AFTER) {
             page += 1
-            movieService.getPopularShows(page).enqueue(createWebserviceCallback(it))
+            webservice.getPopularShows(page).enqueue(createWebserviceCallback(it))
         }
     }
 
@@ -65,9 +65,7 @@ class PopularShowsBoundaryCallback(
         it: PagingRequestHelper.Request.Callback
     ) {
         ioExecutor.execute {
-            response.body()!!.let {
-                handleResponse(it)
-            }
+            handleResponse(response.body()!!)
 
             it.recordSuccess()
         }

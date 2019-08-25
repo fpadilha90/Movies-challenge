@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel
 import com.fpadilha90.movies.home.repository.ShowRepository
 
 class HomeViewModel(showRepository: ShowRepository) : ViewModel() {
-    private val page = MutableLiveData<Int>()
-    private val repoResult = map(page) {
+    val page = MutableLiveData<Int>()
+    val repoResult = map(page) {
         showRepository.getPopularShows()
     }
     val movies = Transformations.switchMap(repoResult) {
@@ -26,8 +26,7 @@ class HomeViewModel(showRepository: ShowRepository) : ViewModel() {
     }
 
     fun retry() {
-        val listing = repoResult?.value
-        listing?.retry?.invoke()
+        repoResult.value?.retry?.invoke()
     }
 
     companion object {

@@ -2,4 +2,7 @@ apply from: "$rootDir/${GradleTemplates.feature}"
 
 dependencies {
     implementation Libraries.recyclerView
+
+    testImplementation Libraries.mockitoKotlin
+    testImplementation Libraries.coreTesting
 }

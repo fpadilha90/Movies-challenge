@@ -37,10 +37,9 @@ dependencies {
     implementation Libraries.roomKTX
     kapt Libraries.roomCompiler
 
-    mockImplementation Libraries.mockito
-
     testImplementation Libraries.jUnit
     testImplementation Libraries.androidxTest
     testImplementation Libraries.truth
     testImplementation Libraries.roboElectric
+    testImplementation Libraries.mockitoKotlin
 }
