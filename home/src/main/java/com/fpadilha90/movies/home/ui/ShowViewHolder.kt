@@ -1,28 +1,27 @@
 package com.fpadilha90.movies.home.ui
 
 import android.animation.ValueAnimator
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.fpadilha90.movies.common.extension.*
-import com.fpadilha90.movies.common.model.Movie
+import com.fpadilha90.movies.common.model.Show
 import com.fpadilha90.movies.home.R
 
 
 /**
- * A RecyclerView ViewHolder that displays a movie.
+ * A RecyclerView ViewHolder that displays a show.
  */
-class MovieViewHolder(view: View, expand: (viewHolder: MovieViewHolder) -> Unit) : RecyclerView.ViewHolder(view) {
+class ShowViewHolder(view: View, expand: (viewHolder: ShowViewHolder) -> Unit) : RecyclerView.ViewHolder(view) {
     private var initialHeight: Int = 0
     private val name: TextView = view.findViewById(R.id.name)
     private val rate: TextView = view.findViewById(R.id.rate)
     private val background: ImageView = view.findViewById(R.id.background)
     private val curtain: View = view.findViewById(R.id.curtain)
     private val overview: TextView = view.findViewById(R.id.overview)
-    private lateinit var movie: Movie
+    private lateinit var show: Show
 
     init {
         view.setOnClickListener {
@@ -30,14 +29,18 @@ class MovieViewHolder(view: View, expand: (viewHolder: MovieViewHolder) -> Unit)
         }
     }
 
-    fun bind(movie: Movie) {
-        this.movie = movie
+    fun bind(show: Show) {
+        this.show = show
 
-        name.text = movie.name
-        rate.text = movie.voteAverage.toString()
-        overview.text = movie.overview
-        //TODO: find a place to this url
-        movie.backdropPath.let {
+        name.text = show.name
+        rate.text = show.voteAverage.toString()
+        overview.text = if (show.overview.isNotEmpty()) {
+            show.overview
+        } else {
+            itemView.context.getString(R.string.empty_overview)
+        }
+        //TODO: find a place for this url
+        show.backdropPath.let {
             background.loadFromUrl("https://image.tmdb.org/t/p/w500$it")
         }
     }
@@ -59,7 +62,6 @@ class MovieViewHolder(view: View, expand: (viewHolder: MovieViewHolder) -> Unit)
 
     fun expand() {
         if (initialHeight == 0) initialHeight = itemView.measuredHeight
-        //todo: dp values
         setIsRecyclable(false)
         val anim = ValueAnimator.ofInt(itemView.measuredHeight, itemView.measuredHeight + 300)
         anim.addUpdateListener {
@@ -75,8 +77,8 @@ class MovieViewHolder(view: View, expand: (viewHolder: MovieViewHolder) -> Unit)
     }
 
     companion object {
-        fun create(parent: ViewGroup, listener: (viewHolder: MovieViewHolder) -> Unit): MovieViewHolder {
-            return MovieViewHolder(parent.inflate(R.layout.item_movie), listener)
+        fun create(parent: ViewGroup, listener: (viewHolder: ShowViewHolder) -> Unit): ShowViewHolder {
+            return ShowViewHolder(parent.inflate(R.layout.item_show), listener)
         }
     }
 }

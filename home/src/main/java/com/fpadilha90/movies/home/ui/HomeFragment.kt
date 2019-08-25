@@ -13,7 +13,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
 
-    private lateinit var adapter: MoviesListAdapter
+    private lateinit var adapter: ShowsListAdapter
     private val viewModel: HomeViewModel by viewModel()
 
     override fun onCreateView(
@@ -27,7 +27,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = MoviesListAdapter {
+        adapter = ShowsListAdapter {
             viewModel.retry()
         }
         moviesView.adapter = adapter

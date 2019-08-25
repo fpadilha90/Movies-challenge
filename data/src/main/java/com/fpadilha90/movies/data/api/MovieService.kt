@@ -1,6 +1,6 @@
 package com.fpadilha90.movies.data.api
 
-import com.fpadilha90.movies.data.model.MovieListDTO
+import com.fpadilha90.movies.data.model.ShowsListDTO
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -8,5 +8,5 @@ import retrofit2.http.Query
 interface MovieService {
 
     @GET("3/tv/popular")
-    fun getPopular(@Query("page") page: Int): Call<MovieListDTO>
+    fun getPopularShows(@Query("page") page: Int): Call<ShowsListDTO>
 }

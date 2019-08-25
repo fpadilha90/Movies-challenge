@@ -19,11 +19,10 @@ package com.fpadilha90.movies.data.repository
 import androidx.annotation.MainThread
 import androidx.paging.PagedList
 import com.fpadilha90.movies.data.utils.createStatusLiveData
-import com.fpadilha90.movies.common.model.Movie
-import com.fpadilha90.movies.common.model.NetworkState
+import com.fpadilha90.movies.common.model.Show
 import com.fpadilha90.movies.data.utils.PagingRequestHelper
 import com.fpadilha90.movies.data.api.MovieService
-import com.fpadilha90.movies.data.model.MovieListDTO
+import com.fpadilha90.movies.data.model.ShowsListDTO
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -36,43 +35,37 @@ import java.util.concurrent.Executor
  * The boundary callback might be called multiple times for the same direction so it does its own
  * rate limiting using the PagingRequestHelper class.
  */
-class MovieBoundaryCallback(
+class PopularShowsBoundaryCallback(
     private val movieService: MovieService,
-    private val handleResponse: (MovieListDTO) -> Unit,
+    private val handleResponse: (ShowsListDTO) -> Unit,
     private val ioExecutor: Executor
-) : PagedList.BoundaryCallback<Movie>() {
+) : PagedList.BoundaryCallback<Show>() {
 
-    private var totalPages: Int = 0
-    private var page: Int = 1
+    private var page: Int = FIRST_PAGE
     val helper = PagingRequestHelper(ioExecutor)
     val networkState = helper.createStatusLiveData()
 
     @MainThread
     override fun onZeroItemsLoaded() {
         helper.runIfNotRunning(PagingRequestHelper.RequestType.INITIAL) {
-            movieService.getPopular(page).enqueue(createWebserviceCallback(it))
+            movieService.getPopularShows(page).enqueue(createWebserviceCallback(it))
         }
     }
 
     @MainThread
-    override fun onItemAtEndLoaded(itemAtEnd: Movie) {
+    override fun onItemAtEndLoaded(itemAtEnd: Show) {
         helper.runIfNotRunning(PagingRequestHelper.RequestType.AFTER) {
             page += 1
-            if (totalPages >= page){
-                movieService.getPopular(page).enqueue(createWebserviceCallback(it))
-            } else {
-                networkState.postValue(NetworkState.LOADED)
-            }
+            movieService.getPopularShows(page).enqueue(createWebserviceCallback(it))
         }
     }
 
     private fun insertItemsIntoDb(
-        response: Response<MovieListDTO>,
+        response: Response<ShowsListDTO>,
         it: PagingRequestHelper.Request.Callback
     ) {
         ioExecutor.execute {
             response.body()!!.let {
-                totalPages = it.total_pages
                 handleResponse(it)
             }
 
@@ -80,25 +73,29 @@ class MovieBoundaryCallback(
         }
     }
 
-    override fun onItemAtFrontLoaded(itemAtFront: Movie) {
+    override fun onItemAtFrontLoaded(itemAtFront: Show) {
     }
 
     private fun createWebserviceCallback(it: PagingRequestHelper.Request.Callback)
-            : Callback<MovieListDTO> {
-        return object : Callback<MovieListDTO> {
+            : Callback<ShowsListDTO> {
+        return object : Callback<ShowsListDTO> {
             override fun onFailure(
-                call: Call<MovieListDTO>,
+                call: Call<ShowsListDTO>,
                 t: Throwable
             ) {
                 it.recordFailure(t)
             }
 
             override fun onResponse(
-                call: Call<MovieListDTO>,
-                response: Response<MovieListDTO>
+                call: Call<ShowsListDTO>,
+                response: Response<ShowsListDTO>
             ) {
                 insertItemsIntoDb(response, it)
             }
         }
+    }
+
+    companion object {
+        const val FIRST_PAGE: Int = 1
     }
 }

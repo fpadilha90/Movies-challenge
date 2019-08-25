@@ -5,14 +5,14 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.fpadilha90.movies.common.model.Movie
+import com.fpadilha90.movies.common.model.Show
 
 @Dao
-interface MovieDao {
-    @Query("SELECT * FROM movies ORDER BY page")
-    fun movies() : DataSource.Factory<Int, Movie>
+interface ShowDao {
+    @Query("SELECT * FROM shows ORDER BY page")
+    fun getAll() : DataSource.Factory<Int, Show>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(movies : List<Movie>)
+    fun insert(shows : List<Show>)
 
 }

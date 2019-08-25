@@ -1,9 +1,7 @@
 package com.fpadilha90.movies.data.utils
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fpadilha90.movies.common.model.NetworkState
-import com.fpadilha90.movies.data.utils.PagingRequestHelper
 
 private fun getErrorMessage(report: PagingRequestHelper.StatusReport): String {
     return PagingRequestHelper.RequestType.values().mapNotNull {

@@ -4,12 +4,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.Transformations.map
 import androidx.lifecycle.ViewModel
-import com.fpadilha90.movies.home.repository.MovieRepository
+import com.fpadilha90.movies.home.repository.ShowRepository
 
-class HomeViewModel(movieRepository: MovieRepository) : ViewModel() {
+class HomeViewModel(showRepository: ShowRepository) : ViewModel() {
     private val page = MutableLiveData<Int>()
     private val repoResult = map(page) {
-        movieRepository.getPopularTVShows()
+        showRepository.getPopularShows()
     }
     val movies = Transformations.switchMap(repoResult) {
         it.pagedList
@@ -18,7 +18,7 @@ class HomeViewModel(movieRepository: MovieRepository) : ViewModel() {
     val refreshState = Transformations.switchMap(repoResult) { it.refreshState }!!
 
     init {
-        page.value = 1
+        page.value = FIRST_PAGE
     }
 
     fun refresh() {
@@ -28,5 +28,9 @@ class HomeViewModel(movieRepository: MovieRepository) : ViewModel() {
     fun retry() {
         val listing = repoResult?.value
         listing?.retry?.invoke()
+    }
+
+    companion object {
+        const val FIRST_PAGE = 1
     }
 }

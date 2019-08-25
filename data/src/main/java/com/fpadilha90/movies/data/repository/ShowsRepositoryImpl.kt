@@ -1,39 +1,34 @@
 package com.fpadilha90.movies.data.repository
 
-import androidx.annotation.MainThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.paging.toLiveData
 import com.fpadilha90.movies.common.model.Listing
-import com.fpadilha90.movies.common.model.Movie
+import com.fpadilha90.movies.common.model.Show
 import com.fpadilha90.movies.common.model.NetworkState
 import com.fpadilha90.movies.data.api.MovieService
-import com.fpadilha90.movies.data.db.MovieDb
-import com.fpadilha90.movies.data.model.MovieListDTO
-import com.fpadilha90.movies.home.repository.MovieRepository
+import com.fpadilha90.movies.data.db.AppDb
+import com.fpadilha90.movies.data.model.ShowsListDTO
+import com.fpadilha90.movies.data.repository.PopularShowsBoundaryCallback.Companion.FIRST_PAGE
+import com.fpadilha90.movies.home.repository.ShowRepository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.concurrent.Executor
 
 
-class MovieRepositoryImpl(
-    val db: MovieDb,
+class ShowsRepositoryImpl(
+    val db: AppDb,
     private val movieService: MovieService,
     private val ioExecutor: Executor
-) : MovieRepository {
+) : ShowRepository {
 
-    private fun insertResultIntoDb(body: MovieListDTO) {
+    private fun insertResultIntoDb(body: ShowsListDTO) {
         body.results.let { movies ->
             movies.map { it.page = body.page }
             db.runInTransaction {
-                //                val start = db.movies().getNextIndexInSubreddit(subredditName)
-//                val items = moviesDTO.mapIndexed { index, child ->
-//                    child.data.indexInResponse = start + index
-//                    child
-//                }
-                db.movies().insert(movies)
+                db.shows().insert(movies)
             }
         }
     }
@@ -41,16 +36,15 @@ class MovieRepositoryImpl(
     private fun refresh(): LiveData<NetworkState> {
         val networkState = MutableLiveData<NetworkState>()
         networkState.value = NetworkState.LOADING
-        movieService.getPopular(1).enqueue(
-            object : Callback<MovieListDTO> {
-                override fun onFailure(call: Call<MovieListDTO>, t: Throwable) {
-                    // retrofit calls this on main thread so safe to call set value
+        movieService.getPopularShows(FIRST_PAGE).enqueue(
+            object : Callback<ShowsListDTO> {
+                override fun onFailure(call: Call<ShowsListDTO>, t: Throwable) {
                     networkState.value = NetworkState.error(t.message)
                 }
 
                 override fun onResponse(
-                    call: Call<MovieListDTO>,
-                    response: Response<MovieListDTO>
+                    call: Call<ShowsListDTO>,
+                    response: Response<ShowsListDTO>
                 ) {
                     ioExecutor.execute {
                         db.runInTransaction {
@@ -64,8 +58,8 @@ class MovieRepositoryImpl(
         return networkState
     }
 
-    override fun getPopularTVShows(): Listing<Movie> {
-        val boundaryCallback = MovieBoundaryCallback(
+    override fun getPopularShows(): Listing<Show> {
+        val boundaryCallback = PopularShowsBoundaryCallback(
             movieService = movieService,
             handleResponse = this::insertResultIntoDb,
             ioExecutor = ioExecutor
@@ -75,7 +69,7 @@ class MovieRepositoryImpl(
             refresh()
         }
 
-        val livePagedList = db.movies().movies().toLiveData(
+        val livePagedList = db.shows().getAll().toLiveData(
             pageSize = 20,
             boundaryCallback = boundaryCallback
         )

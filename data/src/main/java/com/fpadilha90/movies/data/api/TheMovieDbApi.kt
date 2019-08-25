@@ -9,7 +9,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 
-class MovieApi {
+class TheMovieDbApi {
     companion object {
         private const val API_KEY_PARAM = "api_key"
 

@@ -6,10 +6,10 @@ import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 
 @Entity(
-    tableName = "movies",
+    tableName = "shows",
     indices = [Index(value = ["id", "page"], unique = true)]
 )
-data class Movie(
+data class Show(
     @field:Json(name="poster_path")
     val posterPath: String?,
     val popularity: Double,
