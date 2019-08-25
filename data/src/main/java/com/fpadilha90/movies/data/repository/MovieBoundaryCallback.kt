@@ -18,11 +18,12 @@ package com.fpadilha90.movies.data.repository
 
 import androidx.annotation.MainThread
 import androidx.paging.PagedList
-import com.fpadilha90.movies.common.extension.createStatusLiveData
+import com.fpadilha90.movies.data.utils.createStatusLiveData
 import com.fpadilha90.movies.common.model.Movie
-import com.fpadilha90.movies.common.model.PagingRequestHelper
+import com.fpadilha90.movies.common.model.NetworkState
+import com.fpadilha90.movies.data.utils.PagingRequestHelper
 import com.fpadilha90.movies.data.api.MovieService
-import com.fpadilha90.movies.data.model.GetPopularDTO
+import com.fpadilha90.movies.data.model.MovieListDTO
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -36,18 +37,16 @@ import java.util.concurrent.Executor
  * rate limiting using the PagingRequestHelper class.
  */
 class MovieBoundaryCallback(
-        private val movieService: MovieService,
-        private val handleResponse: (GetPopularDTO) -> Unit,
-        private val ioExecutor: Executor)
-    : PagedList.BoundaryCallback<Movie>() {
+    private val movieService: MovieService,
+    private val handleResponse: (MovieListDTO) -> Unit,
+    private val ioExecutor: Executor
+) : PagedList.BoundaryCallback<Movie>() {
 
+    private var totalPages: Int = 0
     private var page: Int = 1
     val helper = PagingRequestHelper(ioExecutor)
     val networkState = helper.createStatusLiveData()
 
-    /**
-     * Database returned 0 items. We should query the backend for more items.
-     */
     @MainThread
     override fun onZeroItemsLoaded() {
         helper.runIfNotRunning(PagingRequestHelper.RequestType.INITIAL) {
@@ -55,46 +54,49 @@ class MovieBoundaryCallback(
         }
     }
 
-    /**
-     * User reached to the end of the list.
-     */
     @MainThread
     override fun onItemAtEndLoaded(itemAtEnd: Movie) {
         helper.runIfNotRunning(PagingRequestHelper.RequestType.AFTER) {
-//            page += 1
-//            movieService.getPopular(page).enqueue(createWebserviceCallback(it))
+            page += 1
+            if (totalPages >= page){
+                movieService.getPopular(page).enqueue(createWebserviceCallback(it))
+            } else {
+                networkState.postValue(NetworkState.LOADED)
+            }
         }
     }
 
-    /**
-     * every time it gets new items, boundary callback simply inserts them into the database and
-     * paging library takes care of refreshing the list if necessary.
-     */
     private fun insertItemsIntoDb(
-        response: Response<GetPopularDTO>,
-        it: PagingRequestHelper.Request.Callback) {
+        response: Response<MovieListDTO>,
+        it: PagingRequestHelper.Request.Callback
+    ) {
         ioExecutor.execute {
-            handleResponse(response.body()!!)
+            response.body()!!.let {
+                totalPages = it.total_pages
+                handleResponse(it)
+            }
+
             it.recordSuccess()
         }
     }
 
     override fun onItemAtFrontLoaded(itemAtFront: Movie) {
-        // ignored, since we only ever append to what's in the DB
     }
 
     private fun createWebserviceCallback(it: PagingRequestHelper.Request.Callback)
-            : Callback<GetPopularDTO> {
-        return object : Callback<GetPopularDTO> {
+            : Callback<MovieListDTO> {
+        return object : Callback<MovieListDTO> {
             override fun onFailure(
-                    call: Call<GetPopularDTO>,
-                    t: Throwable) {
+                call: Call<MovieListDTO>,
+                t: Throwable
+            ) {
                 it.recordFailure(t)
             }
 
             override fun onResponse(
-                    call: Call<GetPopularDTO>,
-                    response: Response<GetPopularDTO>) {
+                call: Call<MovieListDTO>,
+                response: Response<MovieListDTO>
+            ) {
                 insertItemsIntoDb(response, it)
             }
         }

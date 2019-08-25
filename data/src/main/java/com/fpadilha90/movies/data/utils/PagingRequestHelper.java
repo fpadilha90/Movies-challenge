@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.fpadilha90.movies.common.model;
+package com.fpadilha90.movies.data.utils;
 
 import androidx.annotation.*;
 

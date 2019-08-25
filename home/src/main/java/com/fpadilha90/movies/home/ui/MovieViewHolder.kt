@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.fpadilha90.movies.common.extension.invisible
-import com.fpadilha90.movies.common.extension.loadFromUrl
-import com.fpadilha90.movies.common.extension.visible
+import com.fpadilha90.movies.common.extension.*
 import com.fpadilha90.movies.common.model.Movie
 import com.fpadilha90.movies.home.R
 
@@ -45,13 +43,13 @@ class MovieViewHolder(view: View, expand: (viewHolder: MovieViewHolder) -> Unit)
         //todo: dp values
         setIsRecyclable(true)
         val anim = ValueAnimator.ofInt(itemView.measuredHeight, 200)
-        anim.addUpdateListener { valueAnimator ->
-            val `val` = valueAnimator.animatedValue as Int
+        anim.addUpdateListener {
+//            val `val` = it.animatedValue as Int
             val layoutParams = itemView.layoutParams
-            layoutParams.height = `val`
+//            layoutParams.height = `val`
             itemView.layoutParams = layoutParams
-            curtain.invisible()
-            overview.invisible()
+            curtain.gone()
+            overview.gone()
         }
         anim.duration = 200
         anim.start()
@@ -60,10 +58,10 @@ class MovieViewHolder(view: View, expand: (viewHolder: MovieViewHolder) -> Unit)
         //todo: dp values
         setIsRecyclable(false)
         val anim = ValueAnimator.ofInt(itemView.measuredHeight, 600)
-        anim.addUpdateListener { valueAnimator ->
-            val `val` = valueAnimator.animatedValue as Int
+        anim.addUpdateListener {
+//            val `val` = it.animatedValue as Int
             val layoutParams = itemView.layoutParams
-            layoutParams.height = `val`
+//            layoutParams.height = `val`
             itemView.layoutParams = layoutParams
             curtain.visible()
             overview.visible()
@@ -75,9 +73,7 @@ class MovieViewHolder(view: View, expand: (viewHolder: MovieViewHolder) -> Unit)
     companion object {
 
         fun create(parent: ViewGroup, listener: (viewHolder: MovieViewHolder) -> Unit): MovieViewHolder {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_movie, parent, false)
-            return MovieViewHolder(view, listener)
+            return MovieViewHolder(parent.inflate(R.layout.item_movie), listener)
         }
     }
 }
