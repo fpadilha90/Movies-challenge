@@ -19,8 +19,10 @@ Important points:
 <br>.Room, Retrofit, LiveData
 
 What's next?
+<br>.Placeholder for images.
+<br>.Custom message at the end of the pages (10000 pages).
+<br>.Better handle some orientation changes (layout and async tasks)
 <br>.Finish the tests on [data] module (Reach test coverage above 80%)
 <br>.Create instrumental tests
 <br>.Mock the "Retrofit Call" object on [Mock] flavor, to run the application entirely offline and, with controlled data.
 <br>.Map DTO response to a better-formed object for the presentation layer.
-<br>.Review the layout for best user usability.
