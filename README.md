@@ -20,7 +20,7 @@ Important points:
 
 What's next?
 <br>.Placeholder for images.
-<br>.Custom message at the end of the pages (10000 pages).
+<br>.Custom message at the end of the pages (500 pages).
 <br>.Better handle some orientation changes (layout and async tasks)
 <br>.Finish the tests on [data] module (Reach test coverage above 80%)
 <br>.Create instrumental tests
